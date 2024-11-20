@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Usuario</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f7f7f7;
+        }
+
+        .navbar {
+            background-color: #8B0000;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+        }
+
+        .card {
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+
+        .btn-primary {
+            background-color: #8B0000;
+            border-color: #8B0000;
+        }
+
+        .btn-primary:hover {
+            background-color: #b22222;
+        }
+
+        .text-danger {
+            color: #dc3545;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="{% url 'pagina_principal' %}">
+            <img src="{% static 'imagenes/logo.png' %}" alt="Logo"> 
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'pagina_principal' %}">Archivos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin_page' %}">Administración</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ver_logs' %}">Logs</a>
+                </li>
+            </li> 
+            <a class="nav-link" href="{% url 'reportes_auditoria' %}">Reportes</a>
+        </li>  
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="card">
+            <h2 class="text-center mb-4">Editar Usuario</h2>
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="Nombre">Nombre del Usuario</label>
+                    {{ form.Nombre }}
+                    {% if form.Nombre.errors %}
+                        <div class="text-danger">{{ form.Nombre.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="Correo">Correo Electrónico</label>
+                    {{ form.Correo }}
+                    {% if form.Correo.errors %}
+                        <div class="text-danger">{{ form.Correo.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="Rol">Rol</label>
+                    {{ form.Rol }}
+                    {% if form.Rol.errors %}
+                        <div class="text-danger">{{ form.Rol.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="Contraseña">Contraseña</label>
+                    {{ form.Contraseña }}
+                    {% if form.Contraseña.errors %}
+                        <div class="text-danger">{{ form.Contraseña.errors.0 }}</div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

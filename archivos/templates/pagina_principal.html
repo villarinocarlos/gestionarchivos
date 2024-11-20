@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} mt-3 alert-custom" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="text-center mb-4">
+        <h4 class="mb-2">Lista de Archivos</h4>
+        <form class="form-inline justify-content-center" method="get" action="{% url 'pagina_principal' %}">
+            <input type="text" name="search" class="form-control mr-2" placeholder="Buscar archivos..." aria-label="Buscar">
+            <button type="submit" class="btn btn-success">Buscar</button>
+        </form>
+    </div>
+
+    <div class="card shadow-lg mb-4" style="max-width: 180%; padding: 0;">
+        <div class="card-body p-4">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-striped" style="width: 100%; font-size: 1.1rem;">
+                    <thead style="background-color: #8B0000; color: white;">
+                        <tr>
+                            <th scope="col">Nombre del Archivo</th>
+                            <th scope="col">Asunto</th>
+                            <th scope="col">Destinatario</th>
+                            <th scope="col">Oficio</th>
+                            <th scope="col">Procedencia</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Fecha de Creación</th>
+                            <th scope="col">Acciones</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for archivo in page_obj %}
+                            <tr class="clickable-row" data-href="{% if archivo.ID_Archivo %}{% url 'ver_archivo' archivo.ID_Archivo %}{% endif %}">
+                                <td>{{ archivo.Nombre }}</td>
+                                <td>{{ archivo.Asunto }}</td>
+                                <td>{{ archivo.Destinatario }}</td>
+                                <td>{{ archivo.Oficio }}</td>
+                                <td>{{ archivo.Procedencias }}</td>
+                                <td>{{ archivo.Tipo }}</td>
+                                <td>{{ archivo.Estado }}</td>
+                                <td>{{ archivo.FechaCreacion }}</td>
+                                <td>
+                                    {% if archivo.ID_Archivo %}
+                                    <button class="btn btn-danger btn-sm mb-1" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ archivo.ID_Archivo }}">
+                                        Borrar
+                                    </button>
+                                    <a href="{% url 'editar_archivo' archivo.ID_Archivo %}" class="btn btn-warning btn-sm">
+                                        Editar
+                                    </a>
+                                    {% else %}
+                                    <span class="text-muted">No se puede borrar</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="9" class="text-center text-muted">No hay archivos disponibles</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <a href="{% url 'subir_archivo' %}" class="btn btn-success btn-lg mx-2" style="padding: 12px 30px; font-size: 1.2rem;">Subir Archivo</a>
+    </div>
+
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Siguiente">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
+                <p class="lead">¿Estás seguro de que deseas eliminar este archivo?</p>
+                <p>Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <form method="post" action="" id="deleteForm">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body { background-color: #f0f0f0; }
+    .container { max-width: 90%; }
+    .table th, .table td { text-align: center; vertical-align: middle; }
+    .table-hover tbody tr:hover { background-color: #d3d3d3; }
+    .table-bordered { border: 2px solid #8B0000; }
+    .clickable-row { cursor: pointer; }
+    .clickable-row:hover { background-color: #d3d3d3 !important; transition: background-color 0.3s ease; }
+    .btn-success { background-color: #28a745; border-color: #28a745; padding: 10px 25px; font-size: 1.1rem; border-radius: 8px; }
+    .btn-success:hover { background-color: #218838; }
+    .btn-sm { padding: 9px 15px; font-size: 1.25rem; width: 95px; max-width: 95%; }
+    td { white-space: nowrap; }
+    td .btn { display: inline-block; }
+    .btn-warning { color: white; background-color: #ffc107; border-color: #ffc107; }
+    .btn-warning:hover { background-color: #e0a800; color: white; }
+    .btn-danger { background-color: #dc3545; border-color: #dc3545; }
+    .btn-danger:hover { background-color: #c82333; }
+    .pagination .page-link { color: #8B0000; background-color: white; padding: 10px 20px; } /* Aumenta el tamaño del paginador */
+    .pagination .active .page-link { background-color: #8B0000; border-color: #8B0000; color: white; }
+    .pagination .page-item .page-link:hover { background-color: #f0f0f0; color: #8B0000; }
+    .alert-custom { font-size: 1.1rem; padding: 15px; border-radius: 5px; color: #155724; background-color: #d4edda; border: 1px solid #c3e6cb; }
+    .alert-danger.alert-custom { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; font-weight: normal; }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var rows = document.querySelectorAll(".clickable-row");
+        rows.forEach(function(row) {
+            row.addEventListener("click", function(event) {
+                if (!event.target.closest('.btn')) {
+                    var href = row.getAttribute("data-href");
+                    if (href) {
+                        window.location.href = href;
+                    }
+                }
+            });
+        });
+
+        $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var archivoId = button.data('id');
+            var form = document.getElementById('deleteForm');
+            form.action = "/borrar/" + archivoId + "/";  
+        });
+    });
+</script>
+{% endblock %}

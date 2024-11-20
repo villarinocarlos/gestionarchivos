@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Archivo - Instituto Campechano</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f7f7f7;
+        }
+
+        .navbar {
+            background-color: #8B0000; 
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+        }
+
+        .navbar-nav .nav-link.active {
+            background-color: #b22222 !important;
+        }
+
+        .navbar-brand img {
+            height: 50px; 
+        }
+
+        .card {
+            border-radius: 10px;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%; 
+            max-width: 800px; 
+        }
+
+        .form-control {
+            border-radius: 8px;
+        }
+
+        .btn-danger {
+            background-color: #DC143C;
+            border-color: #DC143C;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+        }
+
+        .btn-danger:hover {
+            background-color: #B22222;
+        }
+
+        .text-danger {
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            padding: 15px;
+        }
+
+        .alert-danger ul {
+            margin-bottom: 0;
+        }
+
+        .invalid-feedback {
+            color: #dc3545;
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="{% url 'pagina_principal' %}">
+            <img src="{% static 'imagenes/logo.png' %}" alt="Logo"> 
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'pagina_principal' %}">Archivos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin_page' %}">Administración</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            </ul>
+            
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card p-4 shadow-sm">
+                    <h2 class="text-center mb-4">Editar Archivo</h2>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <!-- Nombre del archivo -->
+                        <div class="form-group">
+                            <label for="nombre_archivo">Nombre del archivo</label>
+                            <input type="text" class="form-control {% if form.Nombre.errors %}is-invalid{% endif %}" id="nombre_archivo" name="Nombre" value="{{ form.Nombre.value|default_if_none:'' }}">
+                            {% if form.Nombre.errors %}
+                                <div class="invalid-feedback">{{ form.Nombre.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Fecha de creación -->
+                        <div class="form-group">
+                            <label for="fecha_creacion">Fecha de creación</label>
+                            <input type="date" class="form-control {% if form.FechaCreacion.errors %}is-invalid{% endif %}" id="fecha_creacion" name="FechaCreacion" value="{{ form.FechaCreacion.value|default_if_none:'' }}">
+                            {% if form.FechaCreacion.errors %}
+                                <div class="invalid-feedback">{{ form.FechaCreacion.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Estado -->
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <select class="form-control {% if form.Estado.errors %}is-invalid{% endif %}" id="estado" name="Estado">
+                                <option value="En Trámite" {% if form.Estado.value == "En Trámite" %}selected{% endif %}>En Trámite</option>
+                                <option value="De Estructura" {% if form.Estado.value == "De Estructura" %}selected{% endif %}>De Estructura</option>
+                                <option value="Histórico" {% if form.Estado.value == "Histórico" %}selected{% endif %}>Histórico</option>
+                            </select>
+                            {% if form.Estado.errors %}
+                                <div class="invalid-feedback">{{ form.Estado.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Tipo -->
+                        <div class="form-group">
+                            <label for="tipo">Tipo</label>
+                            <input type="text" class="form-control {% if form.Tipo.errors %}is-invalid{% endif %}" id="tipo" name="Tipo" value="{{ form.Tipo.value|default_if_none:'' }}">
+                            {% if form.Tipo.errors %}
+                                <div class="invalid-feedback">{{ form.Tipo.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Procedencias -->
+                        <div class="form-group">
+                            <label for="procedencias">Procedencias</label>
+                            <input type="text" class="form-control {% if form.Procedencias.errors %}is-invalid{% endif %}" id="procedencias" name="Procedencias" value="{{ form.Procedencias.value|default_if_none:'' }}">
+                            {% if form.Procedencias.errors %}
+                                <div class="invalid-feedback">{{ form.Procedencias.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Destinatario -->
+                        <div class="form-group">
+                            <label for="destinatario">Destinatario</label>
+                            <input type="text" class="form-control {% if form.Destinatario.errors %}is-invalid{% endif %}" id="destinatario" name="Destinatario" value="{{ form.Destinatario.value|default_if_none:'' }}">
+                            {% if form.Destinatario.errors %}
+                                <div class="invalid-feedback">{{ form.Destinatario.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Número de oficio -->
+                        <div class="form-group">
+                            <label for="oficio">Número de oficio</label>
+                            <input type="text" class="form-control {% if form.Oficio.errors %}is-invalid{% endif %}" id="oficio" name="Oficio" value="{{ form.Oficio.value|default_if_none:'' }}">
+                            {% if form.Oficio.errors %}
+                                <div class="invalid-feedback">{{ form.Oficio.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Asunto -->
+                        <div class="form-group">
+                            <label for="asunto">Asunto</label>
+                            <textarea class="form-control {% if form.Asunto.errors %}is-invalid{% endif %}" id="asunto" name="Asunto" rows="4">{{ form.Asunto.value|default_if_none:'' }}</textarea>
+                            {% if form.Asunto.errors %}
+                                <div class="invalid-feedback">{{ form.Asunto.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Archivo no editable -->
+                        <div class="form-group">
+                            <label for="archivo">Archivo</label>
+                            <input type="text" class="form-control" id="archivo" name="Archivo" value="{{ archivo_info.Archivo }}" readonly>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger btn-block">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

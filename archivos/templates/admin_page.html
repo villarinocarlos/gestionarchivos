@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración de Usuarios - Instituto Campechano</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+
+        .navbar {
+            background-color: #8B0000;
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+        }
+
+        .navbar-nav .nav-link.active {
+            background-color: #b22222 !important;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+        }
+
+        .container {
+            max-width: 90%;
+            margin-top: 40px;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #8B0000;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .table thead th {
+            background-color: #8B0000;
+            color: white;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #d3d3d3;
+        }
+
+        .btn-warning {
+            color: white;
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .create-user-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-success {
+            background-color: #28A745;
+            border-color: #28A745;
+            font-size: 1.1rem;
+            padding: 10px 25px;
+            border-radius: 8px;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="{% url 'pagina_principal' %}">
+            <img src="{% static 'imagenes/logo.png' %}" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'pagina_principal' %}">Archivos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin_page' %}">Administración</a>
+                </li>
+                <li class="nav-item">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ver_logs' %}">Logs</a>
+                    </li>
+                </li> 
+                <a class="nav-link" href="{% url 'reportes_auditoria' %}">Reportes</a>
+            </li> 
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="create-user-container">
+            <a href="{% url 'crear_usuario' %}" class="btn btn-success">Crear Usuario</a>
+        </div>
+        
+        <div class="card shadow-lg mb-4">
+            <div class="card-header">Administración de Usuarios</div>
+            <div class="card-body">
+                
+                {% if usuarios %}
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered table-striped" style="width: 100%; font-size: 1.1rem;">
+                            <thead style="background-color: #8B0000; color: white;">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Correo</th>
+                                    <th>Nombre</th>
+                                    <th>Rol</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for usuario in usuarios %}
+                                    <tr>
+                                        <td>{{ usuario.ID_Usuario }}</td>
+                                        <td>{{ usuario.Correo }}</td>
+                                        <td>{{ usuario.Nombre }}</td>
+                                        <td>{{ usuario.Rol }}</td>
+                                        <td>
+                                            <a href="{% url 'editar_usuario' usuario.ID_Usuario %}" class="btn btn-warning btn-sm">Editar</a>
+                                            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeleteModal" data-id="{{ usuario.ID_Usuario }}">Eliminar</button>
+
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-center text-danger">No hay usuarios disponibles.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
+                    <p class="lead">¿Estás seguro de que deseas eliminar este usuario?</p>
+                    <p>Esta acción no se puede deshacer.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <form method="post" action="{% url 'eliminar_usuario' 0 %}" id="deleteForm">
+                        {% csrf_token %}
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    
+    $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var usuarioId = button.data('id');
+    var form = document.getElementById('deleteForm');
+    form.action = "{% url 'eliminar_usuario' 0 %}".replace('0', usuarioId);
+});
+</script>
+
+</body>
+</html>

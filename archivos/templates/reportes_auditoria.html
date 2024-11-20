@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes de Auditoría</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f7f7f7;
+        }
+        .navbar {
+            background-color: #8B0000; 
+        }
+        .navbar-nav .nav-link {
+            color: white !important;
+        }
+        .navbar-nav .nav-link.active {
+            background-color: #b22222 !important;
+        }
+        .navbar-brand img {
+            height: 50px; 
+        }
+        .content {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .card {
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'imagenes/logo.png' %}" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'pagina_principal' %}">Archivos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin_page' %}">Administración</a>
+                </li> 
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'ver_logs' %}">Logs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>  
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container content">
+        <h2>Reportes de Auditoría</h2>
+
+        <div class="card shadow-lg mb-4">
+            <div class="card-header" style="background-color: #8B0000; color: white;">
+                <h4 class="mb-0">Cantidad de Archivos Subidos por Usuario</h4>
+            </div>
+            <div class="card-body">
+                <div>
+                    {{ graph_usuario_html|safe }}
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-lg mb-4">
+            <div class="card-header" style="background-color: #8B0000; color: white;">
+                <h4 class="mb-0">Cantidad de Archivos Editados por Usuario</h4>
+            </div>
+            <div class="card-body">
+                <div>
+                    {{ graph_editados_html|safe }}
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-lg mb-4">
+            <div class="card-header" style="background-color: #8B0000; color: white;">
+                <h4 class="mb-0">Cantidad de Archivos Borrados por Usuario</h4>
+            </div>
+            <div class="card-body">
+                <div>
+                    {{ graph_borrados_html|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

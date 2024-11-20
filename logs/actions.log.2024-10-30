@@ -1,0 +1,86 @@
+Watching for file changes with StatReloader
+"GET / HTTP/1.1" 200 17456
+"GET /admin_page/ HTTP/1.1" 200 8253
+"GET /admin/logs/ HTTP/1.1" 200 5609
+"GET /admin_page/ HTTP/1.1" 200 8253
+"GET /admin/logs/ HTTP/1.1" 200 5609
+"GET /admin/logs/ HTTP/1.1" 200 7477
+"GET /admin/logs/ HTTP/1.1" 200 7477
+"GET /admin/logs/ HTTP/1.1" 200 7477
+/Users/carlosvillarino/gestion_archivos/gestion_archivos/settings.py changed, reloading.
+2024-10-30 19:02:20,599 - INFO - Watching for file changes with StatReloader
+2024-10-30 19:06:12,078 - INFO - /Users/carlosvillarino/gestion_archivos/archivos/views.py changed, reloading.
+2024-10-30 19:06:12,392 - INFO - Watching for file changes with StatReloader
+2024-10-30 19:06:29,908 - INFO - /Users/carlosvillarino/gestion_archivos/archivos/views.py changed, reloading.
+2024-10-30 19:06:30,173 - INFO - Watching for file changes with StatReloader
+2024-10-30 19:06:34,868 - INFO - "GET /logout/ HTTP/1.1" 302 0
+2024-10-30 19:06:34,876 - INFO - "GET /login/ HTTP/1.1" 200 2700
+2024-10-30 19:06:37,184 - WARNING - Intento de inicio de sesión fallido - correo no registrado: test@gmail.com
+2024-10-30 19:06:37,185 - INFO - "POST /login/ HTTP/1.1" 200 2867
+2024-10-30 19:06:52,460 - INFO - Inicio de sesión exitoso - Usuario: carlos1 (villarinocarlos75@gmail.com)
+2024-10-30 19:06:52,468 - INFO - "POST /login/ HTTP/1.1" 302 0
+2024-10-30 19:06:52,583 - INFO - "GET / HTTP/1.1" 200 17456
+2024-10-30 19:08:57,042 - INFO - "GET /admin_page/ HTTP/1.1" 200 8253
+2024-10-30 19:08:58,170 - INFO - "GET /admin/logs/ HTTP/1.1" 200 7477
+2024-10-30 19:18:22,766 - INFO - /Users/carlosvillarino/gestion_archivos/archivos/views.py changed, reloading.
+2024-10-30 19:18:23,083 - INFO - Watching for file changes with StatReloader
+2024-10-30 19:18:24,992 - INFO - "GET / HTTP/1.1" 200 17456
+2024-10-30 19:18:27,209 - INFO - "GET /subir/ HTTP/1.1" 200 7121
+2024-10-30 19:18:56,742 - INFO - [Subida de Archivo] Archivo 'Tecnologias_Villarino_Chi_Carlos (1).pdf' subido exitosamente por carlos1
+2024-10-30 19:18:56,744 - INFO - "POST /subir/ HTTP/1.1" 302 0
+2024-10-30 19:18:56,858 - INFO - "GET / HTTP/1.1" 200 17983
+2024-10-30 19:21:45,320 - INFO - /Users/carlosvillarino/gestion_archivos/archivos/views.py changed, reloading.
+2024-10-30 19:21:45,627 - INFO - Watching for file changes with StatReloader
+2024-10-30 19:21:47,651 - INFO - "GET /logout/ HTTP/1.1" 302 0
+2024-10-30 19:21:47,660 - INFO - "GET /login/ HTTP/1.1" 200 2700
+2024-10-30 19:21:49,869 - INFO - [Login] Inicio de sesión exitoso - Usuario: carlos1 (villarinocarlos75@gmail.com)
+2024-10-30 19:21:49,878 - INFO - "POST /login/ HTTP/1.1" 302 0
+2024-10-30 19:21:49,994 - INFO - "GET / HTTP/1.1" 200 17983
+2024-10-30 19:23:07,769 - INFO - "GET /logout/ HTTP/1.1" 302 0
+2024-10-30 19:23:07,772 - INFO - "GET /login/ HTTP/1.1" 200 2700
+2024-10-30 19:23:11,473 - INFO - "POST /login/ HTTP/1.1" 200 2860
+2024-10-30 19:23:13,283 - INFO - [Login] Inicio de sesión exitoso - Usuario: carlos1 (villarinocarlos75@gmail.com)
+2024-10-30 19:23:13,291 - INFO - "POST /login/ HTTP/1.1" 302 0
+2024-10-30 19:23:13,397 - INFO - "GET / HTTP/1.1" 200 17983
+2024-10-30 19:23:17,158 - INFO - "GET /editar/1ZmPWEDnzWf4Grelsg3w0F1smDdInC9hg/ HTTP/1.1" 200 7271
+2024-10-30 19:23:19,528 - INFO - "GET /logout/ HTTP/1.1" 302 0
+2024-10-30 19:23:19,531 - INFO - "GET /login/ HTTP/1.1" 200 2700
+2024-10-30 19:23:22,645 - INFO - "POST /login/ HTTP/1.1" 200 2860
+2024-10-30 19:23:27,032 - INFO - [Login] Inicio de sesión exitoso - Usuario: carlos1 (villarinocarlos75@gmail.com)
+2024-10-30 19:23:27,038 - INFO - "POST /login/ HTTP/1.1" 302 0
+2024-10-30 19:23:27,145 - INFO - "GET / HTTP/1.1" 200 17983
+2024-10-30 19:23:34,274 - INFO - "GET /logout/ HTTP/1.1" 302 0
+2024-10-30 19:23:34,278 - INFO - "GET /login/ HTTP/1.1" 200 2700
+2024-10-30 19:23:35,524 - INFO - "GET /editar/1ZmPWEDnzWf4Grelsg3w0F1smDdInC9hg/ HTTP/1.1" 200 7271
+2024-10-30 19:25:22,274 - INFO - "GET /admin_page/ HTTP/1.1" 302 0
+2024-10-30 19:25:22,280 - INFO - "GET /login/ HTTP/1.1" 200 2700
+2024-10-30 19:25:27,043 - INFO - [Login] Inicio de sesión exitoso - Usuario: carlos1 (villarinocarlos75@gmail.com)
+2024-10-30 19:25:27,057 - INFO - "POST /login/ HTTP/1.1" 302 0
+2024-10-30 19:25:27,162 - INFO - "GET / HTTP/1.1" 200 17983
+2024-10-30 19:28:19,328 - INFO - /Users/carlosvillarino/gestion_archivos/archivos/views.py changed, reloading.
+2024-10-30 19:28:19,664 - INFO - Watching for file changes with StatReloader
+2024-10-30 19:28:22,311 - INFO - "GET /editar/1CsEVBLppaprvJr2DHRnkbW19zBnn_QX3/ HTTP/1.1" 200 7269
+2024-10-30 19:28:26,963 - INFO - [Edición de Archivo] Archivo '1CsEVBLppaprvJr2DHRnkbW19zBnn_QX3' editado exitosamente por carlos1
+2024-10-30 19:28:26,964 - INFO - "POST /editar/1CsEVBLppaprvJr2DHRnkbW19zBnn_QX3/ HTTP/1.1" 302 0
+2024-10-30 19:28:27,074 - INFO - "GET / HTTP/1.1" 200 17985
+2024-10-30 19:39:56,028 - INFO - /Users/carlosvillarino/gestion_archivos/archivos/views.py changed, reloading.
+2024-10-30 19:39:56,346 - INFO - Watching for file changes with StatReloader
+2024-10-30 19:39:59,298 - INFO - "GET /admin/logs/ HTTP/1.1" 200 7477
+2024-10-30 19:40:01,163 - INFO - "GET / HTTP/1.1" 200 17985
+2024-10-30 19:40:06,608 - INFO - [Borrado de Archivo] Archivo '1CsEVBLppaprvJr2DHRnkbW19zBnn_QX3' borrado exitosamente por carlos1
+2024-10-30 19:40:06,618 - INFO - "POST /borrar/1CsEVBLppaprvJr2DHRnkbW19zBnn_QX3/ HTTP/1.1" 302 0
+2024-10-30 19:40:06,721 - INFO - "GET / HTTP/1.1" 200 17602
+2024-10-30 19:41:22,111 - INFO - "GET / HTTP/1.1" 200 17456
+2024-10-30 19:41:23,385 - INFO - "GET /admin_page/ HTTP/1.1" 200 8253
+2024-10-30 19:42:21,944 - INFO - "GET /admin/logs/ HTTP/1.1" 200 7477
+2024-10-30 19:48:02,989 - INFO - /Users/carlosvillarino/gestion_archivos/archivos/views.py changed, reloading.
+2024-10-30 19:48:03,326 - INFO - Watching for file changes with StatReloader
+2024-10-30 19:48:04,669 - INFO - [Logout] Cierre de sesión exitoso para el usuario carlos1
+2024-10-30 19:48:04,671 - INFO - "GET /logout/ HTTP/1.1" 302 0
+2024-10-30 19:48:04,679 - INFO - "GET /login/ HTTP/1.1" 200 2700
+2024-10-30 19:48:32,466 - INFO - [Login] Inicio de sesión exitoso - Usuario: carlos1 (villarinocarlos75@gmail.com)
+2024-10-30 19:48:32,470 - INFO - "POST /login/ HTTP/1.1" 302 0
+2024-10-30 19:48:32,583 - INFO - "GET / HTTP/1.1" 200 17456
+2024-10-30 19:48:52,687 - INFO - "GET /admin_page/ HTTP/1.1" 200 8253
+2024-10-30 19:48:54,066 - INFO - "GET /admin/logs/ HTTP/1.1" 200 7477
+2024-10-30 20:55:56,487 - INFO - "GET /admin/logs/ HTTP/1.1" 200 7477

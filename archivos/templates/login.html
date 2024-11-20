@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("{% static 'imagenes/fondo.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 500px; 
+            min-height: 400px; 
+        }
+        .login-container img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+        .login-container h2 {
+            color: #8B0000;
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+        .form-control {
+            border-radius: 5px;
+            font-size: 1rem;
+            padding: 15px;
+            margin-bottom: 5px;
+        }
+        .btn-primary {
+            background-color: #8B0000;
+            border-color: #8B0000;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 1.2rem;
+            padding: 12px;
+        }
+        .btn-primary:hover {
+            background-color: #b22222;
+        }
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            margin-top: 15px;
+        }
+        .text-danger {
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <img src="{% static 'imagenes/logo.png' %}" alt="Logo">
+        <h2>Iniciar Sesión</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="email" class="form-control" name="correo" placeholder="Correo Electrónico">
+                {% if correo_error %}
+                    <div class="text-danger">{{ correo_error }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="contrasena" placeholder="Contraseña">
+                {% if contrasena_error %}
+                    <div class="text-danger">{{ contrasena_error }}</div>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+
+            {% if messages %}
+            <div class="alert alert-danger mt-3">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </form>
+    </div>
+
+</body>
+</html>

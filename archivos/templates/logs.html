@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f7f7f7;
+        }
+
+        .navbar {
+            background-color: #8B0000; 
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+        }
+
+        .navbar-nav .nav-link.active {
+            background-color: #b22222 !important;
+        }
+
+        .navbar-brand img {
+            height: 50px; 
+        }
+
+        .content {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .table thead th {
+            background-color: #8B0000;
+            color: white;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
+
+        
+        .btn-refresh {
+            font-size: 1.25rem; 
+            padding: 10px 30px; 
+        }
+
+        
+        .pagination {
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .pagination .page-link {
+            color: #8B0000;
+            background-color: white;
+            border: 1px solid #8B0000;
+            padding: 10px 20px; 
+        }
+        .pagination .active .page-link {
+            background-color: #8B0000;
+            color: white;
+            border-color: #8B0000;
+        }
+        .pagination .page-item .page-link:hover {
+            background-color: #f0f0f0;
+            color: #8B0000;
+        }
+
+        /* Estilo de búsqueda */
+        .search-bar {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'imagenes/logo.png' %}" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'pagina_principal' %}">Archivos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin_page' %}">Administración</a>
+                </li> 
+                <li class="nav-item">
+                </li> 
+                <a class="nav-link" href="{% url 'reportes_auditoria' %}">Reportes</a>
+            </li>
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>  
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container content">
+        <h2>Logs</h2>
+        
+        
+        <div class="text-center mb-4">
+            <form class="form-inline justify-content-center" method="get" action="{% url 'ver_logs' %}">
+                <input type="text" name="search" class="form-control mr-2" placeholder="Buscar registros..." aria-label="Buscar" value="{{ search_query }}">
+                <button type="submit" class="btn btn-success">Buscar</button>
+            </form>
+        </div>
+
+        <div class="card shadow-lg mb-4">
+            <div class="card-header" style="background-color: #8B0000; color: white;">
+                <h4 class="mb-0">Registros de Administración</h4>
+            </div>
+            <div class="card-body">
+                <!-- Tabla de logs -->
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped" style="width: 100%; font-size: 1.1rem;">
+                        <thead style="background-color: #8B0000; color: white;">
+                            <tr>
+                                <th>Fecha y Hora</th>
+                                <th>Nivel</th>
+                                <th>Mensaje</th>
+                            </tr>
+                        </thead>
+                        <tbody id="log-table">
+                            {% if page_obj %}
+                                {% for log in page_obj %}
+                                    <tr>
+                                        <td>{{ log.timestamp }}</td>
+                                        <td>{{ log.level }}</td>
+                                        <td>{{ log.message }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="3" class="text-center text-muted">No hay registros disponibles.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+                
+                <div class="d-flex justify-content-center mt-3">
+                    <a href="{% url 'ver_logs' %}" class="btn btn-success btn-refresh">Refrescar Logs</a>
+                </div>
+
+                
+                <div class="d-flex justify-content-center mt-4">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1&search={{ search_query }}" aria-label="Primera">
+                                        &laquo; Primera
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&search={{ search_query }}" aria-label="Anterior">
+                                        &laquo; Anterior
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% for num in page_obj.paginator.page_range %}
+                                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                                    <a class="page-link" href="?page={{ num }}&search={{ search_query }}">{{ num }}</a>
+                                </li>
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}&search={{ search_query }}" aria-label="Siguiente">
+                                        Siguiente &raquo;
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&search={{ search_query }}" aria-label="Última">
+                                        Última &raquo;
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
