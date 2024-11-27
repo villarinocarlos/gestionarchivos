@@ -162,3 +162,11 @@ LOGGING = {
         },
     },
 }
+
+ALLOWED_HOSTS = ['carlosvillarino.pythonanywhere.com','localhost']
+
+# Archivos estáticos
+STATIC_URL = '/static/'
+
+# Para producción, puedes configurar una carpeta estática que sea usada en el servidor:
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
